@@ -18,13 +18,16 @@ document.addEventListener("DOMContentLoaded", () => {
         const activityCard = document.createElement("div");
         activityCard.className = "activity-card";
 
-        const spotsLeft = details.max_participants - details.participants.length;
-
         activityCard.innerHTML = `
           <h4>${name}</h4>
           <p>${details.description}</p>
           <p><strong>Schedule:</strong> ${details.schedule}</p>
-          <p><strong>Availability:</strong> ${spotsLeft} spots left</p>
+          <p><strong>Max Participants:</strong> ${details.max_participants}</p>
+          <p><strong>Participants:</strong> ${
+            details.participants.length > 0
+              ? details.participants.join(", ")
+              : "No participants yet"
+          }</p>
         `;
 
         activitiesList.appendChild(activityCard);
@@ -36,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
         activitySelect.appendChild(option);
       });
     } catch (error) {
-      activitiesList.innerHTML = "<p>Failed to load activities. Please try again later.</p>";
+      activitiesList.innerHTML = `<p class="error">Failed to load activities. Please try again later.</p>`;
       console.error("Error fetching activities:", error);
     }
   }
